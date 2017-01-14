@@ -31,7 +31,8 @@
   when: ovirt_engine_answer_file_path != ""
 
 - name: run engine-setup with answerfile
-  shell: 'engine-setup --config-append=/tmp/answerfile.txt'
+  shell: 'engine-setup --config-append=/tmp/answerfile.txt{%
+    if ovirt_engine_version | float >= 4.1  %} --accept-defaults{% endif %}'
   when: ovirt_engine_status|failed
   tags:
     - skip_ansible_lint
